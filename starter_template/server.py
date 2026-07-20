@@ -60,6 +60,9 @@ class GenerateRequest(BaseModel):
 
 app = FastAPI(title=APP_TITLE)
 
+@app.get("/")
+async def hello():
+    return {"status": "ok", "model": MODEL_NAME}
 
 @app.get("/health")
 async def health():
