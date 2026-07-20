@@ -19,9 +19,9 @@ from pydantic import BaseModel, Field
 # ---------------------------------------------------------------
 load_dotenv()
 
-BASE_URL   = os.getenv("MLAPI_BASE_URL")
+BASE_URL   = os.getenv("MLAPI_BASE_URL", "https://mlapi.run/40cc17ae-a89b-4f12-a7d6-13293180fc87/v1")
 API_KEY    = os.getenv("MLAPI_API_KEY")
-MODEL_NAME = os.getenv("MLAPI_MODEL", "openai/gpt-5-mini")
+MODEL_NAME = os.getenv("MLAPI_MODEL", "openai/gpt-4o-mini")
 
 if not API_KEY or API_KEY.startswith("여기에"):
     raise RuntimeError("MLAPI_API_KEY가 설정되어 있지 않습니다. .env 파일을 확인하세요.")
@@ -60,9 +60,6 @@ class GenerateRequest(BaseModel):
 
 app = FastAPI(title=APP_TITLE)
 
-@app.get("/")
-async def hello():
-    return {"status": "ok", "model": MODEL_NAME}
 
 @app.get("/health")
 async def health():
@@ -86,8 +83,7 @@ async def generate_stream(req: GenerateRequest):
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": req.message},
                 ],
-                reasoning_effort = "minimal",
-                #verbosity = "medium",
+                temperature=0.7,
                 stream=True,
                 timeout=60,
             )
