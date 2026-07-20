@@ -1,0 +1,11 @@
+torch
+torchvision
+matplotlib
+fastapi
+uvicorn[standard]
+pydantic
+httpx
+streamlit
+streamlit-drawable-canvas
+pillow
+numpy

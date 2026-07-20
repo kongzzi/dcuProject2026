@@ -1,0 +1,12 @@
+torch
+pandas
+scikit-learn
+joblib
+fastapi
+uvicorn[standard]
+openai
+python-dotenv
+pydantic
+httpx
+streamlit
+numpy
